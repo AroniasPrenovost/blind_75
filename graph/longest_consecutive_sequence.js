@@ -30,6 +30,21 @@
 
 /* 
 
+
+  approach - sorting 
+
+  this is a little more straightforward to think about, but also isnt the most effecient
+
+    - o(nlogn)
+
+*/ 
+
+
+
+
+
+/* 
+
   honorable mention: Kadane's sorting algorithm   [ exceeds time limit ]
 
 
@@ -75,7 +90,9 @@ const longestConsecutive = (nums) => {
   let maxLength = 0;
   for (let num of nums) {
     let length = 1;
-    while (nums.includes(num + length)) length++; // Build up the length as we find the next consecutive num
+    while (nums.includes(num + length)) {
+      length++; // Build up the length as we find the next consecutive num
+    }
     maxLength = Math.max(maxLength, length); // Update max
   }
   return maxLength;
@@ -85,16 +102,6 @@ const longestConsecutive = (nums) => {
 
 
 
-
-
-
-/* 
-
-
-  approach #2 - sorting 
-
-
-*/ 
 
 
 
@@ -154,7 +161,9 @@ var longestConsecutive = function(nums) {
   for(let i = 0; i < nums.length; i++){
       let shift = 1;
       // ES5: .hasOwnProperty instead of .has
-      while(numSet.has(nums[i] + shift)) shift++;
+      while(numSet.has(nums[i] + shift)) {
+        shift++;
+      }
       longest = Math.max(shift, longest);
   }
 
