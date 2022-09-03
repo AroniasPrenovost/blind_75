@@ -36,6 +36,9 @@
 
   -- time limit exceeded 
 
+    time: o(1)
+    space: o(1)
+
 
 */ 
 
