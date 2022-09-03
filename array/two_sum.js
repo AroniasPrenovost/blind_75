@@ -63,7 +63,7 @@ var twoSum = function(nums, target) {
 };
 
 /* 
-  Approach 3: One-pass Hash Table
+  Approach 3.1: One-pass Hash Table
 */ 
 
 var twoSum = function(nums, target) {
@@ -79,6 +79,30 @@ var twoSum = function(nums, target) {
       indices.set(nums[index], index)
   }
 };
+
+// approach #3.2 
+// since we're only iterating once
+// and only adding to it (constant time)
+// time + memory complexity is o(n)
+  // time: single loop 
+  // space: could use entire hashmap 
+  
+var twoSum = function(nums, target) {
+  const indices = new Map();
+
+  for (let i = 0; i < nums.length; i++) {
+      const complement = target - nums[i];
+
+      if (indices.has(complement)) {
+          return [indices.get(complement), i]
+      }
+
+      indices.set(nums[i], i)
+  }
+};
+
+    console.log(twoSum([1, 2, 3, 5, 5, 6, 3], 9))
+
 
 //twoSum([2,7,11,15], 9); // [0, 1]
 
