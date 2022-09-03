@@ -24,20 +24,199 @@
 
 */ 
 
+
+
+
+
+
+
 /* 
 
-  approach #1 - brute force 
+  approach #2 - brute force 
 
  
 
 */ 
 
+function lengthOfLongestSubstring(s) {
+  var k = 0;
+  var maxLength = 0;
+  for(i = 0; i < s.length; i++) {
+    for (j = k; j < i; j++) {
+      if (s[i] === s[j]) {
+        k = j + 1;
+        break;
+      }
+    }
+    if (i - k + 1 > maxLength) {
+      maxLength = i - k + 1;
+    }
+  }
+  return maxLength;
+}
+
+console.log(lengthOfLongestSubstring('abcabcbb'));
+
+
+
+
+/* 
 
 
 
 
 
 
+
+
+
+
+
+
+
+*/ 
+
+var lengthOfLongestSubstring = function(s) {
+  var start = 0, maxLen = 0;
+  var map = new Map();
+
+  for(var i = 0; i < s.length; i++) {
+    var ch = s[i];
+    
+    if(map.get(ch) >= start) {
+        start = map.get(ch) + 1;
+    }
+      
+    map.set(ch, i);
+    
+    maxLen = Math.max(maxLen, i - start + 1);
+  }
+
+  return maxLen;
+};
+
+console.log(lengthOfLongestSubstring('abcrabcbb'));
+
+
+
+
+
+
+
+
+
+/* 
+
+  3.1 one-pass w/ hashmap! 
+
+
+  Time complexity :  O(n). Index jj will iterate nn times.
+
+  Space complexity :  O(min(m,n)). Same as the previous approach.
+
+
+*/ 
+
+const longestSubstring = function(s) {
+  let longest = 0;
+  let start = 0;  // start of the current substring
+  let seen = {};  // hashmap to keep track of characters in the current substring
+  for (let i = 0; i < s.length; i++) {
+      let char = s[i];
+      if (seen[char]) {
+          // if the character is in the hashmap, then we know that we have seen it before
+          // so we need to update the start of the current substring
+          start = Math.max(start, seen[char]);
+      }
+      // we add the current character to the hashmap
+      seen[char] = i + 1;
+      // we update the longest substring
+      longest = Math.max(longest, i - start + 1);
+  }
+  return longest;
+};
+
+console.log(lengthOfLongestSubstring('abcabcbb'));
+
+
+/* 
+
+  Space complexity : O(min(m, n))O(min(m,n)). Same as the previous approach.
+  
+  We need O(k)O(k) space for the sliding window, where kk is the size of the Set. The size of the Set is upper bounded by the size of the string nn and the size of the charset/alphabet mm.
+
+*/ 
+/* 
+
+
+
+
+
+  using a map 
+
+*/ 
+
+
+const lengthOfLongestSubstring = (s) => {
+  // reference to what is needed to update maxLen
+  let tempMax = 0 
+  // initalize at 0 
+  let maxLen = 0;
+  // use Map data structure due to ease of .get() and .set() methods 
+  const map = new Map();   
+
+  for(let i = 0; i < s.length; i++) { 
+      const char = s[i]; 
+    
+      // check to see if character has been encountered before. if so, and the index was equal to or greater than the current tempMax, reset tempMax to index it was seen plus 1. 
+      // important because if the index it was last seen is less than tempMax that means tempMax isn't incremented up, making it easier to use it to update our maxLen below
+      // if it was encountered at a high index that means it will be harder to increase our maxLen since there is a repeat character pretty close to the current character
+      // new characters don't result in tempMax being increased since the lookup returns undefined which will return false for the evaluation
+      // this makes it easy for maxLen to be increased since that calculation looks at the index we are currently at which will always be pretty high since the loop always moves right
+      if (map.get(char) >= tempMax) { 
+          tempMax = map.get(char) + 1; 
+      }
+
+      // always update the index number we saw a character in the map 
+      map.set(char, i); 
+    
+      // use tempMax to determine to update maxLen or not. adding 1 here offsets the addition of 1 when tempMax is recalculated
+      // its used to determine if adding the current character is to our advantage or not as tempMax holds a reference to how far away our last repeat is
+      // subtracting current index from how far away last repeat gives us that difference and the 1 says to update or not. note it has to be greater for it to be worth updating
+      maxLen = Math.max(maxLen, i - tempMax + 1); 
+  }
+
+  return maxLen
+}
+
+
+
+
+
+
+
+/* #2.2 one pass */ 
+
+var lengthOfLongestSubstring = function(s) {
+  var tmp = {},
+      currentMaxRange = 0,
+      lastRepIndex = 0,
+      len = s.length,
+      i;
+  for(i = 0; i < len; i += 1) {
+      var currentChar = s[i];
+      if(typeof tmp[currentChar] !== 'undefined') {
+          currentMaxRange = Math.max(currentMaxRange, i - lastRepIndex);
+          lastRepIndex = Math.max(tmp[currentChar], lastRepIndex);
+      } 
+      tmp[currentChar] = i + 1;
+      
+  }
+  return Math.max(currentMaxRange, i - lastRepIndex);
+};
+
+
+console.log(lengthOfLongestSubstring('abcabcbb'));
 
 
 /* 
