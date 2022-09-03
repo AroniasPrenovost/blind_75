@@ -139,6 +139,12 @@ var groupAnagrams = function(strs) {
 
 /* v.4 */ 
 
+// hashmap approach
+
+// o(m * n)
+// m = total number of input stirngs 
+// n = average length of string (26 length max)
+
 var groupAnagrams = function(strs) {
   let map = new Map();
   
@@ -154,6 +160,14 @@ var groupAnagrams = function(strs) {
 
   return Object.values(map);
 }
+
+/* 
+
+[
+  ["eat", "tea", "ate"], ["tan", "nat"], ["bat"]
+]
+
+*/ 
 
 /* v.5 */ 
 
