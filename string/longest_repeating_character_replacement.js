@@ -38,7 +38,7 @@
 */ 
 
 
-var characterReplacement = function(s, k) {
+var longestRepeatingCharacterReplacement = function(s, k) {
   let mostFreq = -Infinity, max = -Infinity;
   let arr = new Array(26).fill(0);
   let start = 0;
@@ -97,7 +97,7 @@ In the end, the answer is whatever the window size is. This is because we never 
 
 */ 
 
-const characterReplacement = (s, k) => {
+const longestRepeatingCharacterReplacement = (s, k) => {
   let left = 0;
   let right = 0;
   let maxCharCount = 0;
@@ -131,8 +131,11 @@ const characterReplacement = (s, k) => {
 
 */ 
 
-var characterReplacement = function(s, k) {
-  let left = 0, right = 0, mostFreq = 0, maxLen = 0;
+var longestRepeatingCharacterReplacement = function(s, k) {
+  let left = 0;
+  let right = 0;
+  let mostFreq = 0;
+  let maxLen = 0;
   let freqMap = {};
   
   for(right = 0; right < s.length; right++) {
@@ -148,6 +151,8 @@ var characterReplacement = function(s, k) {
   return maxLen;
 };
 
+console.log(longestRepeatingCharacterReplacement('ABA', 1)); // 3 
+console.log(longestRepeatingCharacterReplacement('AABABBA', 1)); // 4 
 
 
 /* 
@@ -159,7 +164,7 @@ var characterReplacement = function(s, k) {
   If the length - mostFreq > k, this means we exceeded our operation limit to make the current window a valid string. Thus, we need to shrink left pointers.
 
 */ 
- var characterReplacement = function(s, k) {
+ var longestRepeatingCharacterReplacement = function(s, k) {
   let left = 0, right = 0, max = 0, mostFreq = 0;
   let freqHash = {};
   
