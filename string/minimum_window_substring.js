@@ -1,13 +1,92 @@
 /* 
 
- 
+    approach #1.1
+
+
+    Time Complexity: O(S + T) where S and T are the respective lengths of strings s and t
+    Space Complexity: O(S + T)
+
+    Intuition
+
+    This is actually very similar to the Permutation in String problem. The difference is that we don't match based on string length since we aren't finding an exact permutation/anagram. Instead, we want the minimal substring which means that we move our window based on finding the smallest possible solution that takes care of the counts of all the characters in t. However, instead of keeping track of checking the exact count of each character each time we encounter a matching a character in s, we instead only need to keep track of how many unique characters there are in t and when a unique character goes down to 0 (or less, since having more characters than we need is okay too). Since the length only goes down each time a character reaches exactly 0, we will never reach the count of all unique characters until every unique character has reached 0.
+
+    The key insight is that once we find the first substring that satisfies the condition, we need to start moving the left part of the window until we have the minimal substring that satisfies it since we don't necessarily need all the characters on the left. In the test case provided:
+
+    s = "ADOBECODEBANC"
+    t = "ABC"
+
+    The minimal substring is just BANC, but we won't encounter it until we've covered all of s. At that point, we need to trim our substring from the left until we get to the minimal substring which can be accomplished with a while loop that moves the left pointer while the substring condition is true.
 
 */ 
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {string}
+ */
+var minWindow = function(s, t) {
+    if (t.length > s.length) return '';
+    
+    const neededChars = {};
+    
+    for (let char of t) {
+        neededChars[char] = (neededChars[char] || 0) + 1;
+    }
+    
+    let left = 0;
+    let right = 0;
+    let neededLength = Object.keys(neededChars).length;
+    let substring = '';
+    
+    while (right < s.length) {
+        const rightChar = s[right];
+        neededChars[rightChar]--;
+        if (neededChars[rightChar] === 0) {
+            neededLength--;
+        }
+        
+        while (neededLength === 0) {
+            if (!substring || substring.length > right - left + 1) {
+                substring = s.slice(left, right + 1);
+            }
+            
+            const leftChar = s[left];
+            // If the leftChar in charMap is at exactly 0 before being 
+            // incremented, we now need more leftChars so that its count
+            // in charMap goes down to exactly 0
+            if (neededChars[leftChar] === 0) {
+                neededLength++;
+            }
+            neededChars[leftChar]++;
+            left++;
+               
+        }
+        
+        right++;
+    }
+    
+    return substring;
+};
+
+console.log(minWindow('ADOBECODEBANC', 'ABC')); // 'BANC'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* 
 
-  approach #1 - sliding window 
+  approach #1.2 - sliding window 
 
   SUMMARY
   Use two pointers(left & right) to :
@@ -228,3 +307,6 @@ var minWindow = function(s, t) {
 };
 
  
+
+
+
