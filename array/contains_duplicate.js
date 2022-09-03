@@ -54,3 +54,19 @@ var hasDuplicates = function(nums) {
 var hasDuplicates = function(nums) {
   return new Set(nums).size < nums.length; 
 };
+
+/* 
+  approach #1: brute force looping through and checking if item has duplicates  == o(n2)
+  approach #2: sort input, and then you know duplicates are adjacent
+    - iterate 1x and compare 2 neighbors to check if they're duplicates
+    time: o(nnlog) (sorting)
+    space: o(1)
+
+    can tradeoff space and memory complexity 
+
+  approach #3: hashmap to check if item is already in the array 
+        time: o(n)
+        space: o(n)
+
+  
+*/ 
