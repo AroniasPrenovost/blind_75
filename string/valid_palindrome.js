@@ -23,6 +23,10 @@ Constraints:
     1 <= s.length <= 2 * 105
     s consists only of printable ASCII characters.
 
+
+
+    o(n)
+
 */ 
 
 /* 
@@ -67,7 +71,9 @@ console.log(isPalindrome("A man, a plan, a canal: Panama"));
 var isPalindrome = function(s) {
 
     let str = s.replace(/[^0-9A-Za-z]/gmi,'').toLowerCase();
-    let i = 0, j = str.length - 1;
+    let i = 0; 
+    let j = str.length - 1;
+    
     while (i < j) {
       if (str[i] !== str[j]) {
         return false;
