@@ -1,7 +1,8 @@
 /* 
 
  
-A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
+A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. 
+There are various applications of this data structure, such as autocomplete and spellchecker. (autocomplete / spellcheckers)
 
 Implement the Trie class:
 
@@ -39,68 +40,14 @@ At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 */ 
 
 
-
-
 /**
  * Initialize your data structure here.
  */
- var Trie = function () {
-  this.root = {};
-};
-
-/**
- * Inserts a word into the trie.
- * @param {string} word
- * @return {void}
- */
-Trie.prototype.insert = function (word) {
-  let node = this.root;
-  for (let char of word) {
-    if (!node[char]) {
-      node[char] = {};
-    }
-    node = node[char];
-  }
-  node["isEnd"] = true;
-  // T.C: O(m), m = length of key
-  // S.C: O(m)
-};
-
-/**
- * Returns if the word is in the trie.
- * @param {string} word
- * @return {boolean}
- */
-Trie.prototype.search = function (word) {
-  let node = this.root;
-  for (let char of word) {
-    if (!node[char]) {
-      return false;
-    }
-    node = node[char];
-  }
-  return node["isEnd"] === true;
+ 
+ 
   // T.C: O(m), m = length of key
   // S.C: O(1)
-};
-
-/**
- * Returns if there is any word in the trie that starts with the given prefix.
- * @param {string} prefix
- * @return {boolean}
- */
-Trie.prototype.startsWith = function (prefix) {
-  let node = this.root;
-  for (let char of prefix) {
-    if (!node[char]) {
-      return false;
-    }
-    node = node[char];
-  }
-  return true;
-  // T.C: O(m), m = length of key
-  // S.C: O(1)
-};
+ 
 
 /**
  * Your Trie object will be instantiated and called as such:
@@ -110,11 +57,14 @@ Trie.prototype.startsWith = function (prefix) {
  * var param_3 = obj.startsWith(prefix)
  */
 
+/* 
+
+  - could use a hashmap, but those are only helpful to look up the full word in o(1) time 
 
 
+*/ 
 
-
-/* v.2 */ 
+ 
 class Trie {
   constructor() {
       this.root = {}; 
@@ -125,7 +75,9 @@ class Trie {
       let node = this.root; 
       for (const char of word) {
           // Does the character exist ? No, then we need to add it to our hash map 
-          if (!(char in node)) node[char] = {}; 
+          if (!(char in node)) {
+            node[char] = {}; 
+          }
           // Character exist, then skip that node
           node = node[char]; 
       }
@@ -137,7 +89,9 @@ class Trie {
       let node = this.root; 
       for (const char of word) {
           // Does the character exist ? No, so its not in our trie we need to return false
-          if (!(char in node)) return false; 
+          if (!(char in node)) {
+            return false; 
+          }
           // Node exist, so skip that character and check next 
           node = node[char]; 
       }
@@ -158,6 +112,11 @@ class Trie {
       return true;
   };
 }
+
+var trie = new Trie();
+trie.insert('Aron'); 
+console.log(trie.search('t')); // false
+console.log(trie.search('Aron')); // true 
 
 
 
