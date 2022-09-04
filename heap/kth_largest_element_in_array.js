@@ -96,7 +96,9 @@ console.log(findKthLargest([3,2,3,1,2,4,5,5,6], 4)); // 4
 
   |||||||||||||
   Approach 2: Quickselect
-    This textbook algorthm has \mathcal{O}(N)O(N) average time complexity. Like quicksort, it was developed by Tony Hoare, and is also known as Hoare's selection algorithm.
+    This textbook algorthm has \mathcal{O}(N)O(N) average time complexity. https://en.wikipedia.org/wiki/Quickselect 
+    Like quicksort, it was developed by Tony Hoare, and is also known as Hoare's selection algorithm.
+    It is also an in-place algorithm, requiring only constant memory overhead if tail call optimization is available, or if eliminating the tail recursion with a loop:
 
     The approach is basically the same as for quicksort. For simplicity let's notice that kth largest element is the same as N - kth smallest element, hence one could implement kth smallest algorithm for this problem.
 
@@ -123,7 +125,6 @@ console.log(findKthLargest([3,2,3,1,2,4,5,5,6], 4)); // 4
           
 
 */
-
 
 
 var findKthLargest = function (nums, k) {
