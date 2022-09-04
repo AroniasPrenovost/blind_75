@@ -45,27 +45,96 @@
     Intuition
 
         If we sort the intervals by their start value, then each set of intervals that can be merged will appear as a contiguous "run" in the sorted list.
+            *Note that modifying prev array also modifies the original res array due to JavaScript object copying properties.
+
 
 */ 
 
 
+var merge = function(intervals) {
+  intervals.sort((a, b) => a[0] - b[0]); 
+  const res = [intervals[0]];
+  
+  for (let curr of intervals) {
+    prev = res[res.length - 1]
+    if (prev[1] >= curr[0]) {
+      prev[1] = Math.max(curr[1], prev[1])
+    } else {
+      res.push(curr)
+    }
+  }
 
-/* */
+  return res;
+};
+
+console.log('output: ', merge([[1,3],[2,6],[8,10],[15,18]])); // [[1,6],[8,10],[15,18]]
+console.log('output: ', merge([[1,4],[4,5]])); // [[1, 5]]
+
+
+
+/* 
+
+
+    a little easier to read? 
+    
+
+*/
+
+
+function merge(intervals) {
+  intervals.sort((a, b) => a[0] - b[0]);
+  let last = [null, -1];
+  let result = [];
+  
+  for(const [start, end] of intervals) {
+      if(start > last[1]) {
+          last = [start, end];
+          result.push(last);
+      } else {
+          last[1] = Math.max(last[1], end);
+      }
+  }
+  
+  return result;
+};
+
+console.log('output: ', merge([[1,3],[2,6],[8,10],[15,18]])); // [[1,6],[8,10],[15,18]]
+console.log('output: ', merge([[1,4],[4,5]])); // [[1, 5]]
+
+/* 
+
+    Sort the intervals by the start index in ascending order. 
+    We can tell if the current interval overlap with the previous one if the current start value > the previous end value. 
+    Update the previous interval accordingly.
+
+*/
 
 var merge = function(intervals) {
   if(intervals.length < 2) return intervals; 
   intervals.sort((a,b) => a[0] - b[0]) //Arr have smaller element come first
-  for(let i = 1; i < intervals.length; i += 1){
+  for (let i = 1; i < intervals.length; i += 1) {
       curr = intervals[i];
       prev = intervals[i-1];
       if(curr[0] <= prev[1]){
           intervals[i] = [Math.min(prev[0],curr[0]), Math.max(prev[1],curr[1])]
           intervals.splice(i-1,1);
-          i -= 1  // After merge, the arr become shorter
+          i -= 1;  // After merge, the arr become shorter
       }
   }
   return intervals
 };
+
+console.log('output: ', merge([[1,3],[2,6],[8,10],[15,18]])); // [[1,6],[8,10],[15,18]]
+console.log('output: ', merge([[1,3],[2,6],[1,4],[4,5]])); // [[1, 5]]
+
+
+
+
+
+
+
+/* */
+
 
 
 const merge = (intervals) => {
@@ -77,6 +146,9 @@ const merge = (intervals) => {
   }
   return res;
 };
+
+console.log('output: ', merge([[1,3],[2,6],[8,10],[15,18]])); // [[1,6],[8,10],[15,18]]
+console.log('output: ', merge([[1,3],[2,6],[1,4],[4,5]])); // [[1, 5]]
 
 
 
@@ -105,7 +177,8 @@ var merge = function(intervals) {
   return mergedIntervals
 }
 
-
+console.log('output: ', merge([[1,3],[2,6],[8,10],[15,18]])); // [[1,6],[8,10],[15,18]]
+console.log('output: ', merge([[1,3],[2,6],[1,4],[4,5]])); // [[1, 5]]
 
 
 
