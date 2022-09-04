@@ -34,11 +34,14 @@
 /* 
 
 
-  approach #1 - recursive
+  approach #1 - recursive - DFS
 
+    we're going to visit every node in the tree, 
+    and every time we look at that node. we look at child positions and swap them 
+    
+      recursively run invertTree() on left + right subtrees as you move down 
 
 */ 
-
 
 var invertTree = function(root) {
   if(!root) return root;
