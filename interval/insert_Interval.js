@@ -40,9 +40,78 @@
 
 */ 
 
+
+/*
+
+  approach #1
+
+    o(nlogN)
+
+
+*/
+
+
+var insert = function(intervals, newInterval) {
+
+  intervals.push(newInterval);
+  intervals.sort((a,b)=>a[0]-b[0]);
+  
+  let arr=[intervals[0]];
+
+  // iterate over existing intervals 
+  for(let i=1; i<intervals.length; i++) {
+    if(arr[arr.length-1][1]>=intervals[i][0]){
+        arr[arr.length-1][1]=Math.max(arr[arr.length-1][1],intervals[i][1]);
+    } else { 
+      arr.push(intervals[i]);
+    }
+  }
+
+  return (arr);
+};
+
+console.log(insert([[1,3],[6,9]], [2, 5])); // [[1,5],[6,9]]
+console.log(insert([[1,2],[3,5],[6,7],[8,10],[12,16]], [4, 8])); // [[1,2],[3,10],[12,16]]
+
+
 /* 
 
-  approach #1 - using a stack 
+  o(n)
+
+*/ 
+
+var insert = function (intervals, newInterval) {
+  const res = [];
+  let [nl, nr] = newInterval;
+  for (let i = 0; i < intervals.length; i++) {
+      const interval = intervals[i];
+      const [l, r] = interval;
+      // new interval comes after current interval 
+      // so add the current interval to res
+      if (nl > r) res.push(interval);
+      // new interval comes before current interval
+      // so add newInterval and then append all remaining
+      else if (nr < l) {
+          res.push([nl, nr]);
+          res.push.apply(res, intervals.slice(i));
+          return res;
+      } else
+          [nl, nr] = [Math.min(nl, l), Math.max(nr, r)];
+  }
+  res.push([nl, nr]);
+  return res;
+};
+
+console.log(insert([[1,3],[6,9]], [2, 5])); // [[1,5],[6,9]]
+console.log(insert([[1,2],[3,5],[6,7],[8,10],[12,16]], [4, 8])); // [[1,2],[3,10],[12,16]]
+
+
+
+
+
+/* 
+
+  approach #2 - using a stack 
 
   O(n)
   
@@ -79,7 +148,7 @@ var insert = function(intervals, newInterval) {
 
 /* 
 
-  approach #2 - same as above
+  approach #2 - same as above 
 
   Time & Space complexity: O(n)
  
