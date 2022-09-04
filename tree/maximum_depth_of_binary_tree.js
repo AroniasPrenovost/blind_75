@@ -1,6 +1,7 @@
 /* 
 
  Given the root of a binary tree, return its maximum depth.
+    - find number of nodes in longest path
 
   A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
@@ -35,6 +36,18 @@
 */ 
 
 
+/* 
+
+    Tree traversals: 
+
+        1. Recursive DFS 
+        2. Iterative DFS (no recursion)
+        3. Breadth first search
+
+
+*/ 
+
+
 
 
 /* 
@@ -49,8 +62,10 @@
 
 var maxDepth = function(root) {
   if(!root) return 0;
-  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); 
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 };
+
+console.log('maxDepth: ', maxDepth([3,9,20,null,null,15,7])); // 3
 
 
 
@@ -122,11 +137,6 @@ var maxDepth = function(root) {
   
   return maxDepth
 };
-
-
-
-
-
 
 
 
