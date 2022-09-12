@@ -24,6 +24,12 @@ Example 1:
 
 */
 
+/* 
+
+  approach #1
+
+*/
+
 var swapPairs = function(head) {
     let dummy = new ListNode(-1);
     dummy.next = head;
@@ -38,5 +44,118 @@ var swapPairs = function(head) {
     }
     return dummy.next;
 };
+
+swapPairs([1, 2, 3, 4]); // [2, 1, 4, 3]
+
+
+/* 
+
+  approach #2
+
+*/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function(head) {
+    let cur = head;
+    let newHead = head && head.next ? head.next : head;
+        
+    while (cur && cur.next) {
+        let next = cur.next;
+        let temp = next.next;
+        
+        next.next = cur;
+        cur.next = temp && temp.next ? temp.next : temp;
+        
+        cur = temp;
+    }
+
+    
+    return newHead;
+};
+
+
+
+
+/* 
+
+  approach #3
+
+*/
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+let swapPairs = function(head) {
+    let dummy=new ListNode();
+    dummy.next = head;
+    let result = dummy;
+    while(dummy.next && dummy.next.next){
+        let p=dummy.next,q = dummy.next.next;
+        dummy.next = q;
+        p.next = q.next;
+        q.next = p;
+        dummy = p
+    }
+    return result.next
+};
+
+swapPairs([1, 2, 3, 4]); // [2, 1, 4, 3]
+
+
+
+/* 
+
+  approach #4
+
+    recursive 
+
+*/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function(head) {
+    let result = resolve(head);
+    return result;
+};
+
+function resolve(head){
+    if(!head || !head.next){
+        return head;
+    }  
+    let temp = head.val;
+    head.val = head.next.val;    
+    head.next.val = temp;
+    resolve(head.next.next);
+    return head;
+}
 
 swapPairs([1, 2, 3, 4]); // [2, 1, 4, 3]
