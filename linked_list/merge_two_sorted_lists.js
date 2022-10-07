@@ -50,27 +50,39 @@
 
     Although recursive approach will be very inneficient is powerful for k lists and short len.
 
-
-
-
 */ 
 
+/*     O(m + n)    */ 
 var mergeTwoLists = function(l1, l2) {
-  const merge = (a,b) => {
-    if(a && b) {
-        if(a.val < b.val) {
-            a.next = merge(a.next, b);
-            return a;
+  if (!l1) return l2;
+  if (!l2) return l1;
+  if (l1.val < l2.val) {
+      l1.next = mergeTwoLists(l1.next, l2);
+      return l1;
+  }
+  l2.next = mergeTwoLists(l1, l2.next);
+  return l2;
+};
+
+
+var mergeTwoLists = function(l1, l2) {
+  const merge = (l1, l2) => {
+    if(l1 && l2) {
+        if(l1.val < l2.val) {
+            l1.next = merge(l1.next, l2);
+            return l1;
         } else {
-            b.next = merge(a, b.next);
-            return b;
+            l1.next = merge(l1, l2.next);
+            return l2;
         }
     }
-    return a || b;
+    return l1 || l2;
   }
   
   return merge(l1, l2);
 };
+
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
 
 
 /* v.2 */ 
@@ -89,23 +101,11 @@ var mergeTwoLists = function(l1, l2) {
   }
 };
 
-/* v.3 */ 
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
 
-var mergeTwoLists = function(l1, l2) {
-  if(!l1)
-      return l2;
-  if(!l2)
-      return l1;
-  if(l1.val > l2.val) {
-      l2.next = mergeTwoLists(l1, l2.next);
-      return l2;
-  }
-  else {
-      l1.next = mergeTwoLists(l1.next, l2);
-      return l1;
-  }
-};
 
+
+/* v.3 (recursive) */ 
 
 var mergeTwoLists = function(l1, l2) {
   if (!l1 || !l2) return l1 || l2;
@@ -116,20 +116,10 @@ var mergeTwoLists = function(l1, l2) {
   return l1
 };
 
-/*     O(m + n)    */ 
 
-var mergeTwoLists = function(l1, l2) {
-  if (!l1) return l2;
-  if (!l2) return l1;
-  if (l1.val < l2.val) {
-      l1.next = mergeTwoLists(l1.next, l2);
-      return l1;
-  }
-  l2.next = mergeTwoLists(l1, l2.next);
-  return l2;
-};
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
 
-
+ 
 
 /* 
 
@@ -185,7 +175,7 @@ var mergeTwoLists = function(l1, l2) {
   
   return dummyHead.next;
 };
-
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
 
 /* v.3 */ 
 
@@ -207,6 +197,8 @@ var mergeTwoLists = function(l1, l2) {
   curr.next = l1 || l2;
   return l3.next
 };
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
+
 
 /* v.4 */ 
 
@@ -232,3 +224,5 @@ var mergeTwoLists = function (l1, l2) {
 
   return tempHead.next;
 };
+
+mergeTwoLists([1,2,4], [1,3,4]); // [1,1,2,3,4,4]
